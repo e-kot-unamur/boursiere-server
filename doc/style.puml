@@ -1,0 +1,8 @@
+hide circles
+
+skinparam {
+	Shadowing false
+	DefaultFontName Helvetica
+	ClassBorderColor black
+	ArrowColor black
+}

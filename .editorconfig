@@ -1,0 +1,18 @@
+# https://EditorConfig.org
+
+root = true
+
+# We wont touch .go files as gofmt can handle himself.
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.sql]
+indent_style = tab
+
+[*.{md,puml}]
+indent_style = space
+indent_size = 2

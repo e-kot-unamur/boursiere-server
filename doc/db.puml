@@ -1,0 +1,43 @@
+@startuml
+!include style.puml
+
+hide methods
+
+class beers {
+  id: INTEGER
+  bar_id: INTEGER
+  name: TEXT
+  stock_quantity: INTEGER
+  purchase_price: REAL
+  alcohol_content: REAL
+  incr_coef: REAL
+  decr_coef: REAL
+  min_coef: REAL
+  max_coef: REAL
+}
+
+class history {
+  id: INTEGER
+  beer_id: INTEGER
+  timestamp: INTEGER
+  sold_quantity: INTEGER
+  selling_price: REAL
+}
+
+beers <-- history : beer_id
+
+class users {
+  id: INTEGER
+  name: TEXT
+  password: TEXT
+  admin: BOOLEAN
+}
+
+class tokens {
+  value: TEXT
+  user_id: INTEGER
+}
+
+users <-- tokens : user_id
+
+@enduml
