@@ -15,7 +15,7 @@ import (
 func NewSqliteDatabase(dataSourceName string) (Database, error) {
 	var database Database
 
-	db, err := sql.Open("sqlite3", dataSourceName)
+	db, err := sql.Open("sqlite3", dataSourceName+"?_foreign_keys=on")
 	if err != nil {
 		return database, err
 	}
@@ -82,6 +82,36 @@ func (m sqliteBeerManager) All() ([]Beer, error) {
 	}
 
 	return beers, nil
+}
+
+func (m sqliteBeerManager) Create(b *Beer) error {
+	result, err := m.dot.Exec(m.db, "beers/create", b.BarID, b.Name, b.StockQuantity, b.PurchasePrice, b.AlcoholContent, b.IncrCoef, b.DecrCoef, b.MinCoef, b.MaxCoef)
+	if err != nil {
+		return err
+	}
+
+	id, err := result.LastInsertId()
+	if err != nil {
+		return err
+	}
+
+	if _, err := m.dot.Exec(m.db, "beers/update-price", id, b.PurchasePrice); err != nil {
+		return err
+	}
+
+	b.ID = uint(id)
+	b.SellingPrice = b.PurchasePrice
+	b.PreviousSellingPrice = b.PurchasePrice
+	return nil
+}
+
+func (m sqliteBeerManager) DeleteAll() error {
+	_, err := m.dot.Exec(m.db, "beers/delete-all")
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func (m sqliteBeerManager) EstimatedProfit() (float64, error) {
@@ -220,8 +250,8 @@ func (m sqliteUserManager) Create(name, password string, admin bool) (User, erro
 	return user, nil
 }
 
-func (m sqliteUserManager) Update(user *User) error {
-	if _, err := m.dot.Exec(m.db, "users/update", user.ID, user.Name, user.Password, user.Admin); err != nil {
+func (m sqliteUserManager) Update(u *User) error {
+	if _, err := m.dot.Exec(m.db, "users/update", u.ID, u.Name, u.Password, u.Admin); err != nil {
 		return err
 	}
 
@@ -229,10 +259,6 @@ func (m sqliteUserManager) Update(user *User) error {
 }
 
 func (m sqliteUserManager) Delete(id uint) error {
-	if _, err := m.dot.Exec(m.db, "users/delete-tokens", id); err != nil {
-		return err
-	}
-
 	if _, err := m.dot.Exec(m.db, "users/delete", id); err != nil {
 		return err
 	}

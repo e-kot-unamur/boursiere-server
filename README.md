@@ -21,6 +21,7 @@ See the [detailed route description](./doc/routes.md) for more information.
 | Method | Path              | Description                                                                                                      |
 | -----: | :---------------- | :--------------------------------------------------------------------------------------------------------------- |
 |    GET | /api/beers        | Get the current status of all beers.                                                                             |
+|   POST | /api/beers        | Delete all existing beers and upload new ones. **Authentication** as admin is required.                          |
 |    GET | /api/beers/events | SSE route to get notified of price and quantity updates.                                                         |
 |   POST | /api/beers/order  | Add (or remove) an amount to beers' sold quantities. **Authentication** is required.                             |
 |    GET | /api/beers/stats  | Get current statistics about the event (only estimated profit for now). **Authentication** as admin is required. |

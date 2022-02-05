@@ -50,6 +50,16 @@ LEFT JOIN
 LEFT JOIN
 	h2 ON b.id = h2.beer_id
 
+-- name: beers/create
+INSERT INTO
+	beers(bar_id, name, stock_quantity, purchase_price, alcohol_content, incr_coef, decr_coef, min_coef, max_coef)
+VALUES
+	(?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9)
+
+-- name: beers/delete-all
+DELETE FROM
+	beers
+
 -- name: beers/get-estimated-profit
 SELECT
 	COALESCE(SUM(h.sold_quantity * (ROUND(h.selling_price, 1) - b.purchase_price)), 0) AS estimated_profit

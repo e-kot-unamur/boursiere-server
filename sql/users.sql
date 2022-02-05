@@ -75,9 +75,3 @@ DELETE FROM
 	tokens
 WHERE
 	value = ?1
-
--- name: users/delete-tokens
-DELETE FROM
-	tokens
-WHERE
-	user_id = ?1

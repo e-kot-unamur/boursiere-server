@@ -15,3 +15,18 @@ VALUES
 	(2, 100, 3, 5),
 	(2, 200, 9, 1),
 	(2, 300, 10, 1.2);
+
+-- name: testing/insert-users
+INSERT INTO
+	users(id, name, password, admin)
+VALUES
+	(1, "admin", "hashedpwd", true),
+	(2, "bob", "hashedhash", false);
+
+-- name: testing/insert-tokens
+INSERT INTO
+	tokens(value, user_id)
+VALUES
+	("incredibletoken", 1),
+	("amazingtoken", 1),
+	("cooltoken", 2);

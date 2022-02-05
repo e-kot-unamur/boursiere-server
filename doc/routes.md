@@ -8,9 +8,9 @@ To use a token in an authenticated route, use the HTTP *Authorization* header wi
 
 ```http
 POST /api/beers/order HTTP/1.1
-...
+…
 Authorization: Bearer Xepk1c6fhGr5ItJeZeM6PmJjz2s…
-...
+…
 ```
 
 ## Common responses
@@ -58,9 +58,55 @@ Get the current status of all beers (ID, bar, name, quantity, price, etc.).
     "stockQuantity": 24,
     "totalSoldQuantity": 4,
     "sellingPrice": 1.2,
+    "previousSellingPrice": 1.1,
     "alcoholContent": 12
   },
   …
+]
+```
+
+## POST /api/beers
+
+Upload beer types to the database. An admin access token is required.
+
+Existing beers and their history are deleted beforehand.
+
+### Request
+
+`text/csv`
+
+```csv
+name,barId,bottleSize,alcoholContent,Prix/Bac,Bouteilles/Bac,Nb. Bacs,stockQuantity,purchasePrice,incrCoef,decrCoef,minCoef,maxCoef,Prix minimum,Prix maximum
+Barbar,2,33,8,"23,66 €",20,3,60,"2,54 €","0,07 €","0,09 €","0,85","2,5","2,20 €","6,30 €"
+Bertinchamps Triple,2,50,8,"49,39 €",20,2,40,"0,81 €","0,08 €","0,08 €","0,85","2,5","0,70 €","2,00 €"
+```
+
+### Responses
+
+201 Created
+
+```json
+[
+  {
+    "id": 1,
+    "barId": 2,
+    "name": "Barbar",
+    "stockQuantity": 60,
+    "totalSoldQuantity": 0,
+    "sellingPrice": 2.54,
+    "previousSellingPrice": 2.54,
+    "alcoholContent": 8
+  },
+  {
+    "id": 2,
+    "barId": 2,
+    "name": "Bertinchamps Triple",
+    "stockQuantity": 40,
+    "totalSoldQuantity": 0,
+    "sellingPrice": 0.81,
+    "previousSellingPrice": 0.81,
+    "alcoholContent": 8
+  }
 ]
 ```
 

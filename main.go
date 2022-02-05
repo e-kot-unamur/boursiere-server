@@ -88,6 +88,37 @@ func main() {
 		c.JSON(http.StatusOK, beers)
 	})
 
+	// Delete all existing beers and upload new ones.
+	router.POST("/api/beers", auth(db.Users, true), func(c *gin.Context) {
+		if c.ContentType() != "text/csv" {
+			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "bad_request"})
+			return
+		}
+
+		beers, err := LoadBeersFromCSV(c.Request.Body)
+		if err != nil {
+			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "bad_request"})
+			return
+		}
+
+		if err := db.Beers.DeleteAll(); err != nil {
+			panic(err)
+		}
+
+		for i := range beers {
+			if err := db.Beers.Create(&beers[i]); err != nil {
+				panic(err)
+			}
+		}
+
+		broker.Broadcast(gin.H{
+			"type": "update",
+			"data": beers,
+		})
+
+		c.JSON(http.StatusCreated, beers)
+	})
+
 	// Get real-time updates of beers' status.
 	router.GET("/api/beers/events", broker.ServeHTTP)
 
@@ -154,7 +185,7 @@ func main() {
 
 	// Edit a user.
 	router.PATCH("/api/users/:id", auth(db.Users, false), func(c *gin.Context) {
-		id64, err := strconv.ParseUint(c.Param("id"), 10, 64)
+		id64, err := strconv.ParseUint(c.Param("id"), 10, 0)
 		if err != nil {
 			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "bad_request"})
 			return
@@ -197,7 +228,7 @@ func main() {
 
 	// Delete a user.
 	router.DELETE("/api/users/:id", auth(db.Users, true), func(c *gin.Context) {
-		id64, err := strconv.ParseUint(c.Param("id"), 10, 64)
+		id64, err := strconv.ParseUint(c.Param("id"), 10, 0)
 		if err != nil {
 			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "bad_request"})
 			return

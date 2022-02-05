@@ -1,6 +1,62 @@
 package main
 
-import "testing"
+import (
+	"reflect"
+	"strings"
+	"testing"
+)
+
+func TestLoadBeersFromCSV(t *testing.T) {
+	tests := []struct {
+		csv  string
+		want []Beer
+	}{
+		{
+			csv:  "name\nmyname\n",
+			want: []Beer{{Name: "myname"}},
+		},
+		{
+			csv:  "name\nmyname\nyourname\n",
+			want: []Beer{{Name: "myname"}, {Name: "yourname"}},
+		},
+		{
+			csv:  "barId\n4\n",
+			want: []Beer{{BarID: 4}},
+		},
+		{
+			csv:  "a,b,c\n1,2,3\n",
+			want: []Beer{{}},
+		},
+		{
+			csv:  "purchasePrice\n45.2\n",
+			want: []Beer{{PurchasePrice: 45.2}},
+		},
+		{
+			csv:  "purchasePrice\n\"45,2€\"\n",
+			want: []Beer{{PurchasePrice: 45.2}},
+		},
+		{
+			csv:  "purchasePrice\n\"45,2 €\"\n",
+			want: []Beer{{PurchasePrice: 45.2}},
+		},
+		{
+			csv:  "purchasePrice,barId,name\n4 €,1,\"ho ho\"\n",
+			want: []Beer{{BarID: 1, Name: "ho ho", PurchasePrice: 4}},
+		},
+	}
+
+	for _, test := range tests {
+		r := strings.NewReader(test.csv)
+		got, err := LoadBeersFromCSV(r)
+		if err != nil {
+			t.Errorf("LoadBeersFromCSV() failed: %v", err)
+		}
+
+		if !reflect.DeepEqual(got, test.want) {
+			t.Errorf("LoadBeersFromCSV() = %v; got %v", test.want, got)
+		}
+	}
+}
 
 func TestNewPrice(t *testing.T) {
 	tests := []struct {
@@ -85,7 +141,6 @@ func TestPassword(t *testing.T) {
 	if !user.CheckPassword("helloworld") {
 		t.Error("user.CheckPassword() failed but shouldn't")
 	}
-
 	if user.CheckPassword("helloword") {
 		t.Error("user.CheckPassword() succeeded but shouldn't")
 	}

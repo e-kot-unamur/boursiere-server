@@ -31,7 +31,7 @@ func NewBroker() Broker {
 	return b
 }
 
-// ServeHTTP is a SSE handler function that sends any broadcasted message.
+// ServeHTTP is an SSE handler function that sends any broadcasted message.
 func (b *Broker) ServeHTTP(c *gin.Context) {
 	msgs := b.Subscribe()
 	defer b.Unsubscribe(msgs)
