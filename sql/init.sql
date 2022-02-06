@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS beers (
 	name            VARCHAR(256) NOT NULL,
 	stock_quantity  INTEGER NOT NULL,
 	purchase_price  DECIMAL(6, 2) NOT NULL,
+	bottle_size     REAL NOT NULL,
 	alcohol_content REAL NOT NULL,
 	incr_coef       REAL NOT NULL,
 	decr_coef       REAL NOT NULL,

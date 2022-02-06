@@ -59,6 +59,7 @@ Get the current status of all beers (ID, bar, name, quantity, price, etc.).
     "totalSoldQuantity": 4,
     "sellingPrice": 1.2,
     "previousSellingPrice": 1.1,
+    "bottleSize": 33,
     "alcoholContent": 12
   },
   …
@@ -95,6 +96,7 @@ Bertinchamps Triple,2,50,8,"49,39 €",20,2,40,"0,81 €","0,08 €","0,08 €",
     "totalSoldQuantity": 0,
     "sellingPrice": 2.54,
     "previousSellingPrice": 2.54,
+    "bottleSize": 33,
     "alcoholContent": 8
   },
   {
@@ -105,6 +107,7 @@ Bertinchamps Triple,2,50,8,"49,39 €",20,2,40,"0,81 €","0,08 €","0,08 €",
     "totalSoldQuantity": 0,
     "sellingPrice": 0.81,
     "previousSellingPrice": 0.81,
+    "bottleSize": 50,
     "alcoholContent": 8
   }
 ]

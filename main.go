@@ -42,6 +42,10 @@ func main() {
 		panic(err)
 	}
 
+	// if _, err := db.Users.Create("admin", "admin", true); err != nil {
+	// 	panic(err)
+	// }
+
 	broker := NewBroker()
 	go func() {
 		p := period.Milliseconds()

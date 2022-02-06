@@ -70,7 +70,7 @@ func (m sqliteBeerManager) All() ([]Beer, error) {
 	beers := []Beer{}
 	for rows.Next() {
 		var b Beer
-		if err := rows.Scan(&b.ID, &b.BarID, &b.Name, &b.StockQuantity, &b.SoldQuantity, &b.PreviousSoldQuantity, &b.TotalSoldQuantity, &b.SellingPrice, &b.PreviousSellingPrice, &b.PurchasePrice, &b.AlcoholContent, &b.IncrCoef, &b.DecrCoef, &b.MinCoef, &b.MaxCoef); err != nil {
+		if err := rows.Scan(&b.ID, &b.BarID, &b.Name, &b.StockQuantity, &b.SoldQuantity, &b.PreviousSoldQuantity, &b.TotalSoldQuantity, &b.SellingPrice, &b.PreviousSellingPrice, &b.PurchasePrice, &b.BottleSize, &b.AlcoholContent, &b.IncrCoef, &b.DecrCoef, &b.MinCoef, &b.MaxCoef); err != nil {
 			return nil, err
 		}
 
@@ -85,7 +85,7 @@ func (m sqliteBeerManager) All() ([]Beer, error) {
 }
 
 func (m sqliteBeerManager) Create(b *Beer) error {
-	result, err := m.dot.Exec(m.db, "beers/create", b.BarID, b.Name, b.StockQuantity, b.PurchasePrice, b.AlcoholContent, b.IncrCoef, b.DecrCoef, b.MinCoef, b.MaxCoef)
+	result, err := m.dot.Exec(m.db, "beers/create", b.BarID, b.Name, b.StockQuantity, b.PurchasePrice, b.BottleSize, b.AlcoholContent, b.IncrCoef, b.DecrCoef, b.MinCoef, b.MaxCoef)
 	if err != nil {
 		return err
 	}

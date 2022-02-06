@@ -77,6 +77,7 @@ func TestAllBeersWithoutHistory(t *testing.T) {
 			SellingPrice:         1.3,
 			PreviousSellingPrice: 1.3,
 			PurchasePrice:        1.3,
+			BottleSize:           33,
 			AlcoholContent:       12,
 			IncrCoef:             0.01,
 			DecrCoef:             0.02,
@@ -94,6 +95,7 @@ func TestAllBeersWithoutHistory(t *testing.T) {
 			SellingPrice:         1.2,
 			PreviousSellingPrice: 1.2,
 			PurchasePrice:        1.2,
+			BottleSize:           33,
 			AlcoholContent:       8.4,
 			IncrCoef:             0.02,
 			DecrCoef:             0.02,
@@ -129,6 +131,7 @@ func TestAllBeersWithHistory(t *testing.T) {
 			SellingPrice:         1.2,
 			PreviousSellingPrice: 1.4,
 			PurchasePrice:        1.3,
+			BottleSize:           33,
 			AlcoholContent:       12,
 			IncrCoef:             0.01,
 			DecrCoef:             0.02,
@@ -146,6 +149,7 @@ func TestAllBeersWithHistory(t *testing.T) {
 			SellingPrice:         1.2,
 			PreviousSellingPrice: 1,
 			PurchasePrice:        1.2,
+			BottleSize:           33,
 			AlcoholContent:       8.4,
 			IncrCoef:             0.02,
 			DecrCoef:             0.02,
@@ -185,6 +189,7 @@ func TestCreateBeersUpdating(t *testing.T) {
 		Name:           "test",
 		StockQuantity:  6,
 		PurchasePrice:  2.22,
+		BottleSize:     25,
 		AlcoholContent: 6,
 		IncrCoef:       0.02,
 		DecrCoef:       0.03,
@@ -203,6 +208,7 @@ func TestCreateBeersUpdating(t *testing.T) {
 		SellingPrice:         2.22, // updated
 		PreviousSellingPrice: 2.22, // updated
 		PurchasePrice:        2.22,
+		BottleSize:           25,
 		AlcoholContent:       6,
 		IncrCoef:             0.02,
 		DecrCoef:             0.03,
@@ -268,7 +274,7 @@ func TestAllUsers(t *testing.T) {
 	}
 }
 
-func TestUserById(t *testing.T) {
+func TestUserByID(t *testing.T) {
 	users := newSqliteUserManager()
 	users.mustExec("testing/insert-users")
 

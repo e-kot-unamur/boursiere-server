@@ -38,6 +38,7 @@ SELECT
 	COALESCE(h1.selling_price, b.purchase_price) AS selling_price,
 	COALESCE(h2.selling_price, h1.selling_price, b.purchase_price) AS previous_selling_price,
 	b.purchase_price,
+	b.bottle_size,
 	b.alcohol_content,
 	b.incr_coef,
 	b.decr_coef,
@@ -52,9 +53,9 @@ LEFT JOIN
 
 -- name: beers/create
 INSERT INTO
-	beers(bar_id, name, stock_quantity, purchase_price, alcohol_content, incr_coef, decr_coef, min_coef, max_coef)
+	beers(bar_id, name, stock_quantity, purchase_price, bottle_size, alcohol_content, incr_coef, decr_coef, min_coef, max_coef)
 VALUES
-	(?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9)
+	(?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10)
 
 -- name: beers/delete-all
 DELETE FROM

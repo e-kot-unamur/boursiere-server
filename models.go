@@ -54,6 +54,7 @@ type Beer struct {
 	SellingPrice         float64 `json:"sellingPrice" csv:"-"`
 	PreviousSellingPrice float64 `json:"previousSellingPrice" csv:"-"`
 	PurchasePrice        float64 `json:"-" csv:"purchasePrice"`
+	BottleSize           float64 `json:"bottleSize" csv:"bottleSize"`
 	AlcoholContent       float64 `json:"alcoholContent" csv:"alcoholContent"`
 	IncrCoef             float64 `json:"-" csv:"incrCoef"`
 	DecrCoef             float64 `json:"-" csv:"decrCoef"`
@@ -79,11 +80,11 @@ func init() {
 	}
 }
 
-// LoadBeersFromCSV parses CSV data and generate beers. It mimics Unmarshal
+// LoadBeersFromCSV parses CSV data and generates beers. It mimics Unmarshal
 // from the standard library.
 //
 // The first row is interpreted as column names and takes the `csv` struct tag
-// into account. Missing columns are ignored and "-" tags are omitted.
+// into account. Missing columns are ignored and `csv:"-"` tags are omitted.
 //
 // For columns of type float64, "," are replaced with "." to handle French
 // decimal commas. Furthermore, trailling spaces (" ") and euro symbols ("€")

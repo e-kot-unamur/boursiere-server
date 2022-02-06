@@ -1,9 +1,9 @@
 -- name: testing/insert-beers
 INSERT INTO
-	beers(bar_id, name, stock_quantity, purchase_price, alcohol_content, incr_coef, decr_coef, min_coef, max_coef)
+	beers(bar_id, name, stock_quantity, purchase_price, bottle_size, alcohol_content, incr_coef, decr_coef, min_coef, max_coef)
 VALUES
-	(1, 'Bush', 24, 1.3, 12, 0.01, 0.02, 0.8, 1.2),
-	(3, 'TK', 48, 1.2, 8.4, 0.02, 0.02, 0.8, 1.2);
+	(1, 'Bush', 24, 1.3, 33, 12, 0.01, 0.02, 0.8, 1.2),
+	(3, 'TK', 48, 1.2, 33, 8.4, 0.02, 0.02, 0.8, 1.2);
 
 -- name: testing/insert-history
 INSERT INTO
