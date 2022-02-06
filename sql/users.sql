@@ -7,6 +7,12 @@ SELECT
 FROM
 	users
 
+-- name: users/count
+SELECT
+	COUNT(*)
+FROM
+	users
+
 -- name: users/get-by-id
 SELECT
 	id,

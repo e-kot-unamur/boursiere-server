@@ -274,6 +274,33 @@ func TestAllUsers(t *testing.T) {
 	}
 }
 
+func TestCountUsers(t *testing.T) {
+	users := newSqliteUserManager()
+	users.mustExec("testing/insert-users")
+
+	got, err := users.Count()
+	if err != nil {
+		t.Errorf("users.Count() failed: %v", err)
+	}
+
+	if got != 2 {
+		t.Errorf("users.Count() = 2; got %v", got)
+	}
+}
+
+func TestCountUsersZero(t *testing.T) {
+	users := newSqliteUserManager()
+
+	got, err := users.Count()
+	if err != nil {
+		t.Errorf("users.Count() failed: %v", err)
+	}
+
+	if got != 0 {
+		t.Errorf("users.Count() = 0; got %v", got)
+	}
+}
+
 func TestUserByID(t *testing.T) {
 	users := newSqliteUserManager()
 	users.mustExec("testing/insert-users")

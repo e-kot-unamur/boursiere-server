@@ -32,6 +32,7 @@ type BeerManager interface {
 // UserManager includes all possible operations on the User model.
 type UserManager interface {
 	All() ([]User, error)
+	Count() (uint, error)
 	ByID(id uint) (User, error)
 	ByName(name string) (User, error)
 	ByToken(token string) (User, error)

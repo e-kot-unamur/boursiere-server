@@ -188,6 +188,20 @@ func (m sqliteUserManager) All() ([]User, error) {
 	return users, nil
 }
 
+func (m sqliteUserManager) Count() (uint, error) {
+	row, err := m.dot.QueryRow(m.db, "users/count")
+	if err != nil {
+		return 0, err
+	}
+
+	var count uint
+	if err := row.Scan(&count); err != nil {
+		return 0, err
+	}
+
+	return count, nil
+}
+
 func (m sqliteUserManager) ByID(id uint) (User, error) {
 	var user User
 

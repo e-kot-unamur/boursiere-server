@@ -42,9 +42,16 @@ func main() {
 		panic(err)
 	}
 
-	// if _, err := db.Users.Create("admin", "admin", true); err != nil {
-	// 	panic(err)
-	// }
+	count, err := db.Users.Count()
+	if err != nil {
+		panic(err)
+	}
+
+	if count == 0 {
+		if _, err := db.Users.Create("admin", "boursière", true); err != nil {
+			panic(err)
+		}
+	}
 
 	broker := NewBroker()
 	go func() {

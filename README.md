@@ -14,6 +14,8 @@ Start the server in development mode.
 go run .
 ```
 
+At startup, if no users exist in the database, a default administrator is created with username `admin` and password `boursière`. The password can (**and should**) be changed thereafter.
+
 ## Routes
 
 See the [detailed route description](./doc/routes.md) for more information.
