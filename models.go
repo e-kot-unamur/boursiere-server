@@ -63,11 +63,12 @@ type Beer struct {
 	MaxCoef              float64 `json:"-" csv:"maxCoef"`
 }
 
-var beerType = reflect.TypeOf(Beer{})
-var beerFields map[string]reflect.StructField
+var (
+	beerType   = reflect.TypeOf(Beer{})
+	beerFields = map[string]reflect.StructField{}
+)
 
 func init() {
-	beerFields = make(map[string]reflect.StructField)
 	for i := 0; i < beerType.NumField(); i++ {
 		field := beerType.Field(i)
 		title := field.Tag.Get("csv")

@@ -151,6 +151,9 @@ func (m sqliteBeerManager) UpdatePrices() error {
 	}
 
 	for _, beer := range beers {
+		if beer.SoldQuantity == 0 && beer.PreviousSoldQuantity == 0 {
+			continue
+		}
 		if err := m.UpdatePrice(beer.ID, beer.NewPrice()); err != nil {
 			return err
 		}
