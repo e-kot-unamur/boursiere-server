@@ -9,6 +9,7 @@ class beers {
   name: TEXT
   stock_quantity: INTEGER
   purchase_price: REAL
+  bottle_size: REAL
   alcohol_content: REAL
   incr_coef: REAL
   decr_coef: REAL
