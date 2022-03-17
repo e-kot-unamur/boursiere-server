@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -37,7 +38,12 @@ type (
 const period = 15 * time.Minute
 
 func main() {
-	db, err := NewSqliteDatabase("db.sqlite3")
+	dataSourceName := os.Getenv("DATABASE_FILE")
+	if dataSourceName == "" {
+		dataSourceName = "db.sqlite3"
+	}
+
+	db, err := NewSqliteDatabase(dataSourceName)
 	if err != nil {
 		panic(err)
 	}
