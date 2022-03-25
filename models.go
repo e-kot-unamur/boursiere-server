@@ -166,19 +166,11 @@ func LoadBeersFromCSV(source io.Reader) ([]Beer, error) {
 // quantity, price and sold quantity of the last period.
 func (b *Beer) NewPrice() float64 {
 	price := b.SellingPrice
-	stock := b.StockQuantity - b.TotalSoldQuantity
 	delta := float64(b.SoldQuantity - b.PreviousSoldQuantity)
-
-	if stock > 10 {
-		if delta > 0 {
-			price += b.IncrCoef * delta
-		} else {
-			price += b.DecrCoef * delta
-		}
-	} else if stock > 5 {
-		price = 2.1 * b.PurchasePrice
+	if delta > 0 {
+		price += b.IncrCoef * delta
 	} else {
-		price = 2.5 * b.PurchasePrice
+		price += b.DecrCoef * delta
 	}
 
 	minPrice := b.MinCoef * b.PurchasePrice

@@ -110,18 +110,18 @@ func TestNewPrice(t *testing.T) {
 		},
 		{
 			beer: Beer{
-				StockQuantity:        6,
-				SoldQuantity:         4,
+				StockQuantity:        48,
+				SoldQuantity:         28,
 				PreviousSoldQuantity: 1,
-				TotalSoldQuantity:    5,
+				TotalSoldQuantity:    29,
 				SellingPrice:         1,
 				PurchasePrice:        1,
 				IncrCoef:             0.01,
 				DecrCoef:             0.01,
-				MinCoef:              0,
-				MaxCoef:              5,
+				MinCoef:              1,
+				MaxCoef:              1.1,
 			},
-			want: 2.5, // only 1 unit left
+			want: 1.1, // 27 sold units more but MaxCoef of 1.1
 		},
 	}
 
