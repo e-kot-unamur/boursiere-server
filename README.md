@@ -14,7 +14,15 @@ Start the server in development mode.
 go run .
 ```
 
+You can now access the server using the [web client](https://github.com/e-kot-unamur/boursiere-client).
+
+The server uses an SQLite database. By default, it will be saved in a "db.sqlite3" file. You can override this file's name by setting the `DATABASE_FILE` environment variable.
+
+There's also a `PORT` variable that defines the port to which the server listens to. It will be `8080` by default.
+
 At startup, if no users exist in the database, a default administrator is created with username `admin` and password `boursière`. The password can (**and should**) be changed thereafter.
+
+There is a [French user guide](./doc/guide.md) available. Take a look at it for more information.
 
 ## Routes
 

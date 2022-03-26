@@ -26,5 +26,5 @@ WORKDIR /
 COPY --from=build /boursiere ./
 COPY sql/ ./sql/
 
-EXPOSE 80
+EXPOSE 8080
 ENTRYPOINT ["/boursiere"]
