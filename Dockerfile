@@ -26,5 +26,8 @@ WORKDIR /
 COPY --from=build /boursiere ./
 COPY sql/ ./sql/
 
-EXPOSE 8080
+ENV GIN_MODE=release
+ENV PORT=80
+
+EXPOSE 80
 ENTRYPOINT ["/boursiere"]
