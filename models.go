@@ -3,19 +3,19 @@ package main
 import (
 	"encoding/csv"
 	"fmt"
+	"golang.org/x/crypto/bcrypt"
 	"io"
 	"math"
 	"reflect"
 	"strconv"
 	"strings"
-
-	"golang.org/x/crypto/bcrypt"
 )
 
 // Database gives access to all models that can be stored.
 type Database struct {
-	Beers BeerManager
-	Users UserManager
+	Beers   BeerManager
+	Users   UserManager
+	Entries EntriesManager
 }
 
 // BeerManager includes all possible operations on the Beer model.
@@ -41,6 +41,11 @@ type UserManager interface {
 	Delete(id uint) error
 	CreateToken(userID uint) (string, error)
 	DeleteToken(token string) error
+}
+
+// EntriesManager includes all possible operations on the Entries model.
+type EntriesManager interface {
+	All() ([]Entries, error)
 }
 
 // Beer represents a type of beer from the database.
@@ -206,4 +211,11 @@ func (u *User) SetPassword(password string) {
 func (u *User) CheckPassword(password string) bool {
 	err := bcrypt.CompareHashAndPassword(u.Password, []byte(password))
 	return err == nil
+}
+
+// Entries represents a type of entries from the database.
+type Entries struct {
+	ID           uint   `json:"id"`
+	Timestamp    string `json:"timestamp"`
+	SoldQuantity int    `json:"soldQuantity"`
 }

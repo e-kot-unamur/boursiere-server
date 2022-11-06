@@ -31,6 +31,7 @@ func NewSqliteDatabase(dataSourceName string) (Database, error) {
 
 	database.Beers = &sqliteBeerManager{db, dot}
 	database.Users = &sqliteUserManager{db, dot}
+	database.Entries = &sqliteEntriesManager{db, dot}
 	return database, err
 }
 
@@ -309,4 +310,33 @@ func (m sqliteUserManager) DeleteToken(token string) error {
 	}
 
 	return nil
+}
+
+type sqliteEntriesManager struct {
+	db  *sql.DB
+	dot *dotsql.DotSql
+}
+
+func (m sqliteEntriesManager) All() ([]Entries, error) {
+	rows, err := m.dot.Query(m.db, "entries/get-all")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	entries := []Entries{}
+	for rows.Next() {
+		var e Entries
+		if err := rows.Scan(&e.ID, &e.Timestamp, &e.SoldQuantity); err != nil {
+			return nil, err
+		}
+
+		entries = append(entries, e)
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return entries, nil
 }

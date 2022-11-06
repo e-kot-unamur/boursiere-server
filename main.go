@@ -296,6 +296,16 @@ func main() {
 		c.Status(http.StatusNoContent)
 	})
 
+	// Get the list of all entries.
+	router.GET("/api/entries", func(c *gin.Context) {
+		entries, err := db.Entries.All()
+		if err != nil {
+			panic(err)
+		}
+
+		c.JSON(http.StatusOK, entries)
+	})
+
 	router.Run()
 }
 
