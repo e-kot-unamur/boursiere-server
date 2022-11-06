@@ -41,4 +41,10 @@ class tokens {
 
 users <-- tokens : user_id
 
+class entries {
+  id: INTEGER
+  timestamp: INTEGER
+  soldQuantity : INTEGER
+}
+
 @enduml

@@ -312,3 +312,54 @@ Delete a given access token, effectively logging out. The deleted token is the o
 ### Responses
 
 204 No Content
+
+## GET /api/entries
+
+Returns the sales list of entries. An admin access token is required.
+
+### Responses
+
+200 OK
+
+```json
+[
+  {
+    "id": 1,
+    "timestamp": "2022-11-06 11:27:21",
+    "orderedQuantity": 5
+  },
+  …
+]
+```
+
+## POST /api/entries
+
+Create a new entry. An admin access token is required.
+
+### Request
+
+```json
+{
+  "orderedQuantity": 5
+}
+```
+
+### Responses
+
+201 Created
+
+```json
+{
+  "id": 1,
+  "timestamp": "2022-11-06 11:27:21",
+  "orderedQuantity": 5
+}
+```
+
+401 Unauthorized
+
+```json
+{
+  "error": "wrong_credentials"
+}
+```

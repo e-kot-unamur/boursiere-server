@@ -51,3 +51,5 @@ See the [detailed route description](./doc/routes.md) for more information.
 The `beers` table contains all static information about a beer type. On the other hand, `history` contains dynamic information such as the current price and quantity. For instance, a beer current selling price can simply be found by looking at its most recent history entry.
 
 The `users` and `tokens` tables are used to authenticate accesses to the API.
+
+The table of `entries` allows you to follow the sale of pre-sales of access to the evening
