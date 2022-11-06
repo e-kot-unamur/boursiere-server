@@ -366,3 +366,17 @@ func (m sqliteEntriesManager) DeleteAll() error {
 
 	return nil
 }
+
+func (m sqliteEntriesManager) Count() (uint, error) {
+	row, err := m.dot.QueryRow(m.db, "entries/stat")
+	if err != nil {
+		return 0, err
+	}
+
+	var count uint
+	if err := row.Scan(&count); err != nil {
+		return 0, err
+	}
+
+	return count, nil
+}

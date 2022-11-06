@@ -330,25 +330,7 @@ func main() {
 	router.GET("/api/entries/events", entriesBroker.ServeHTTP)
 
 	// Add a new entry sale.
-	router.POST("/api/entries", auth(db.Users, true), func(c *gin.Context) {
-		fmt.Println("Hello WOrld")
-		var req createEntryReq
-		if err := c.BindJSON(&req); err != nil {
-			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "bad_request"})
-			return
-		}
-
-		entry, err := db.Entries.Create(req.OrderedQuantity)
-		if err != nil {
-			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "non_unique_name"})
-			return
-		}
-
-		c.JSON(http.StatusCreated, entry)
-	})
-
-	// [TEST] Add a new entry sale.
-	router.POST("/api/entries/test", func(c *gin.Context) {
+	router.POST("/api/entries", func(c *gin.Context) {
 		fmt.Println("new entry")
 		var req createEntryReq
 		if err := c.BindJSON(&req); err != nil {
@@ -373,6 +355,16 @@ func main() {
 		})
 
 		c.JSON(http.StatusCreated, entry)
+	})
+
+	// Get statistic about entries.
+	router.GET("/api/entries/stat", func(c *gin.Context) {
+		count, err := db.Entries.Count()
+		if err != nil {
+			panic(err)
+		}
+
+		c.JSON(http.StatusOK, count)
 	})
 
 	router.Run()

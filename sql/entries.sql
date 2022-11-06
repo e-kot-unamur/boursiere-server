@@ -15,3 +15,6 @@ VALUES
 -- name: entries/delete-all
 DELETE FROM
 	entries
+
+-- name: entries/stat
+SELECT SUM(sold_quantity) FROM entries
