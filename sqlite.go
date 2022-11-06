@@ -340,3 +340,20 @@ func (m sqliteEntriesManager) All() ([]Entries, error) {
 
 	return entries, nil
 }
+
+func (m sqliteEntriesManager) Create(OrderedQuantity int) (Entries, error) {
+	entry := Entries{SoldQuantity: OrderedQuantity}
+
+	result, err := m.dot.Exec(m.db, "entries/create", entry.SoldQuantity)
+	if err != nil {
+		return entry, err
+	}
+
+	id, err := result.LastInsertId()
+	if err != nil {
+		return entry, err
+	}
+
+	entry.ID = uint(id)
+	return entry, nil
+}

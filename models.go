@@ -46,6 +46,7 @@ type UserManager interface {
 // EntriesManager includes all possible operations on the Entries model.
 type EntriesManager interface {
 	All() ([]Entries, error)
+	Create(OrderedQuantity int) (Entries, error)
 }
 
 // Beer represents a type of beer from the database.
@@ -217,5 +218,5 @@ func (u *User) CheckPassword(password string) bool {
 type Entries struct {
 	ID           uint   `json:"id"`
 	Timestamp    string `json:"timestamp"`
-	SoldQuantity int    `json:"soldQuantity"`
+	SoldQuantity int    `json:"orderedQuantity"`
 }

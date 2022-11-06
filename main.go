@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"os"
 	"strconv"
@@ -32,6 +33,10 @@ type (
 	orderReq []struct {
 		ID              uint `json:"id" binding:"min=1"`
 		OrderedQuantity int  `json:"orderedQuantity"`
+	}
+
+	createEntryReq struct {
+		OrderedQuantity int `json:"orderedQuantity"`
 	}
 )
 
@@ -297,13 +302,31 @@ func main() {
 	})
 
 	// Get the list of all entries.
-	router.GET("/api/entries", func(c *gin.Context) {
+	router.GET("/api/entries", auth(db.Users, true), func(c *gin.Context) {
 		entries, err := db.Entries.All()
 		if err != nil {
 			panic(err)
 		}
 
 		c.JSON(http.StatusOK, entries)
+	})
+
+	// Add a new entry sale.
+	router.POST("/api/entries", auth(db.Users, true), func(c *gin.Context) {
+		fmt.Println("Hello WOrld")
+		var req createEntryReq
+		if err := c.BindJSON(&req); err != nil {
+			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "bad_request"})
+			return
+		}
+
+		entry, err := db.Entries.Create(req.OrderedQuantity)
+		if err != nil {
+			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "non_unique_name"})
+			return
+		}
+
+		c.JSON(http.StatusCreated, entry)
 	})
 
 	router.Run()
