@@ -70,11 +70,11 @@ Attention, **importer des bières réinitialise l'intégralité de l'événement
 > `/entries.html`
 
 Cette page permet de gérer la vente et revente des préventes durant la soirée.
-Les entrées sont remise à zéro en même temps que le prix des bières et les stocks via l'importation d'un
+Les entrées sont remises à zéro en même temps que le prix des bières et les stocks via l'importation d'un
 nouveau fichier .csv via le panel admin.
 
 Le prix d'une prévente est actuellement hardcodé sur le client (il n'est pas présent sur le serveur). Si vous devez
-le modifier, il faudra le modifer sur `EntriesCard.tsx` et `AdminStats.txt`.
+le modifier, il faudra le modifier sur `EntriesCard.tsx` et `AdminStats.txt`.
 
 ## Personnalisation
 
