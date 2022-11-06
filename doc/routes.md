@@ -332,6 +332,10 @@ Returns the sales list of entries. An admin access token is required.
 ]
 ```
 
+## GET /api/entries/events
+
+TODO
+
 ## POST /api/entries
 
 Create a new entry. An admin access token is required.
@@ -361,5 +365,25 @@ Create a new entry. An admin access token is required.
 ```json
 {
   "error": "wrong_credentials"
+}
+```
+
+## GET /api/entries/stat
+
+Returns the current statistic about the event (only entries' info). An admin access token is required.
+
+### Responses
+
+200 OK
+
+```json
+17
+```
+
+401 Unauthorized
+
+```json
+{
+  "error": "unauthenticated"
 }
 ```

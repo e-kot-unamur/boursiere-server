@@ -65,10 +65,23 @@ C'est sur cette page que vous pouvez importer les bières dans le système et cr
 
 Attention, **importer des bières réinitialise l'intégralité de l'événement** : toutes les commandes effectuées seront supprimées et les prix seront remis à zéro. Cet effet est volontaire, car cela permet de réinitialiser la boursière quand c'est nécessaire, mais soyez-en conscients.
 
+### Page de gestion des entrées
+
+> `/entries.html`
+
+Cette page permet de gérer la vente et revente des préventes durant la soirée.
+Les entrées sont remise à zéro en même temps que le prix des bières et les stocks via l'importation d'un
+nouveau fichier .csv via le panel admin.
+
+Le prix d'une prévente est actuellement hardcodé sur le client (il n'est pas présent sur le serveur). Si vous devez
+le modifier, il faudra le modifer sur `EntriesCard.tsx` et `AdminStats.txt`.
+
 ## Personnalisation
 
 Il est possible de personnaliser l'apparence du site web en modifiant les fichiers CSS. Vous pouvez notamment changer la couleur principale ou la taille de la police.
 
 Si vous souhaitez modifier le son de changement de période, il suffit de modifier le fichier audio dans le code source du client web. Comme pour toute application web, il est fortement conseillé de choisir un format audio compressé (Ogg Vorbis idéalement) pour limiter l'utilisation de la bande passante.
 
-Finalement, pour changer la durée d'une période, il faut à la fois modifier le fichier "main.go" côté serveur et "BeerTimer.tsx" côté client.
+Ensuite, pour changer la durée d'une période, il faut à la fois modifier le fichier "main.go" côté serveur et "BeerTimer.tsx" côté client.
+
+Finalement, portez une attention au prix de la prévente, comme expliqué dans la section `Page de gestion des entrées`
