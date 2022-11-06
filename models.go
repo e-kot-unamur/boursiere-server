@@ -47,6 +47,7 @@ type UserManager interface {
 type EntriesManager interface {
 	All() ([]Entries, error)
 	Create(OrderedQuantity int) (Entries, error)
+	DeleteAll() error
 }
 
 // Beer represents a type of beer from the database.

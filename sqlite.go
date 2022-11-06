@@ -357,3 +357,12 @@ func (m sqliteEntriesManager) Create(OrderedQuantity int) (Entries, error) {
 	entry.ID = uint(id)
 	return entry, nil
 }
+
+func (m sqliteEntriesManager) DeleteAll() error {
+	_, err := m.dot.Exec(m.db, "entries/delete-all")
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

@@ -11,3 +11,7 @@ INSERT INTO
 	entries(sold_quantity)
 VALUES
 	(?1);
+
+-- name: entries/delete-all
+DELETE FROM
+	entries

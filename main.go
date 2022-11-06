@@ -65,6 +65,7 @@ func main() {
 	}
 
 	broker := NewBroker()
+	entriesBroker := NewBroker()
 	go func() {
 		p := period.Milliseconds()
 		n := time.Now().UnixMilli()
@@ -83,9 +84,19 @@ func main() {
 				panic(err)
 			}
 
+			entries, err := db.Entries.All()
+			if err != nil {
+				panic(err)
+			}
+
 			broker.Broadcast(gin.H{
 				"type": "update",
 				"data": beers,
+			})
+
+			entriesBroker.Broadcast(gin.H{
+				"type": "update",
+				"data": entries,
 			})
 
 			<-tick.C
@@ -124,6 +135,10 @@ func main() {
 		}
 
 		if err := db.Beers.DeleteAll(); err != nil {
+			panic(err)
+		}
+
+		if err := db.Entries.DeleteAll(); err != nil {
 			panic(err)
 		}
 
@@ -302,7 +317,7 @@ func main() {
 	})
 
 	// Get the list of all entries.
-	router.GET("/api/entries", auth(db.Users, true), func(c *gin.Context) {
+	router.GET("/api/entries", func(c *gin.Context) {
 		entries, err := db.Entries.All()
 		if err != nil {
 			panic(err)
@@ -310,6 +325,9 @@ func main() {
 
 		c.JSON(http.StatusOK, entries)
 	})
+
+	// Get real-time updates of entries' status.
+	router.GET("/api/entries/events", entriesBroker.ServeHTTP)
 
 	// Add a new entry sale.
 	router.POST("/api/entries", auth(db.Users, true), func(c *gin.Context) {
@@ -325,6 +343,34 @@ func main() {
 			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "non_unique_name"})
 			return
 		}
+
+		c.JSON(http.StatusCreated, entry)
+	})
+
+	// [TEST] Add a new entry sale.
+	router.POST("/api/entries/test", func(c *gin.Context) {
+		fmt.Println("new entry")
+		var req createEntryReq
+		if err := c.BindJSON(&req); err != nil {
+			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "bad_request"})
+			return
+		}
+
+		entry, err := db.Entries.Create(req.OrderedQuantity)
+		if err != nil {
+			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "non_unique_name"})
+			return
+		}
+
+		entries, err := db.Entries.All()
+		if err != nil {
+			panic(err)
+		}
+
+		entriesBroker.Broadcast(gin.H{
+			"type": "order",
+			"data": entries,
+		})
 
 		c.JSON(http.StatusCreated, entry)
 	})
