@@ -315,7 +315,7 @@ Delete a given access token, effectively logging out. The deleted token is the o
 
 ## GET /api/entries
 
-Returns the sales list of entries. An admin access token is required.
+Returns the sales list of entries. An access token is required.
 
 ### Responses
 
@@ -338,7 +338,7 @@ TODO
 
 ## POST /api/entries
 
-Create a new entry. An admin access token is required.
+Create a new entry. An access token is required.
 
 ### Request
 
@@ -370,7 +370,7 @@ Create a new entry. An admin access token is required.
 
 ## GET /api/entries/stat
 
-Returns the current statistic about the event (only entries' info). An admin access token is required.
+Returns the current statistic about the event (only entries' info). An access token is required.
 
 ### Responses
 

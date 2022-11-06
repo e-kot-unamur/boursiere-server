@@ -28,23 +28,23 @@ There is a [French user guide](./doc/guide.md) available. Take a look at it for 
 
 See the [detailed route description](./doc/routes.md) for more information.
 
-| Method | Path                | Description                                                                                        |
-|-------:|:--------------------|:---------------------------------------------------------------------------------------------------|
-|    GET | /api/beers          | Get the current status of all beers.                                                               |
-|   POST | /api/beers          | Delete all existing beers and upload new ones. **Authentication** as admin is required.            |
-|    GET | /api/beers/events   | SSE route to get notified of price and quantity updates.                                           |
-|   POST | /api/beers/order    | Add (or remove) an amount to beers' sold quantities. **Authentication** is required.               |
-|    GET | /api/beers/stats    | Get current statistics about the event (only beers info). **Authentication** as admin is required. |
-|    GET | /api/users          | Get the list of all existing users. **Authentication** as admin is required.                       |
-|   POST | /api/users          | Create a new user. **Authentication** as admin is required.                                        |
-|  PATCH | /api/users/:id      | Update a user. **Authentication** is required.                                                     |
-| DELETE | /api/users/:id      | Delete a user. **Authentication** as admin is required.                                            |
-|   POST | /api/users/token    | Generate a new access token in exchange for name/password authentication.                          |
-| DELETE | /api/users/token    | Delete a given access token, effectively logging out.                                              |
-|    GET | /api/entries        | Get the list of all entries. **Authentication** as admin is required.                              |
-|    GET | /api/entries/events | SSE route to get notified of entries sales updates.                                                |
-|   POST | /api/entries        | Add (or remove) an amount to entries' sold quantities. **Authentication** is required.             |
-|    GET | /api/entries/stat   | Get current statistic about the event (only entries info) **Authentication** is required.                                          |
+| Method | Path                | Description                                                                                                                    |
+|-------:|:--------------------|:-------------------------------------------------------------------------------------------------------------------------------|
+|    GET | /api/beers          | Get the current status of all beers.                                                                                           |
+|   POST | /api/beers          | Delete all existing beers and upload new ones. **Authentication** as admin is required.                                        |
+|    GET | /api/beers/events   | SSE route to get notified of price and quantity updates.                                                                       |
+|   POST | /api/beers/order    | Add (or remove) an amount to beers' sold quantities. **Authentication** is required.                                           |
+|    GET | /api/beers/stats    | Get current statistics about the event (only beers info). **Authentication** as admin is required.                             |
+|    GET | /api/users          | Get the list of all existing users. **Authentication** as admin is required.                                                   |
+|   POST | /api/users          | Create a new user. **Authentication** as admin is required.                                                                    |
+|  PATCH | /api/users/:id      | Update a user. **Authentication** is required.                                                                                 |
+| DELETE | /api/users/:id      | Delete a user. **Authentication** as admin is required.                                                                        |
+|   POST | /api/users/token    | Generate a new access token in exchange for name/password authentication.                                                      |
+| DELETE | /api/users/token    | Delete a given access token, effectively logging out.                                                                          |
+|    GET | /api/entries        | Get the list of all entries. **Authentication** is required.                                                                   |
+|    GET | /api/entries/events | SSE route to get notified of entries sales updates.                                                                            |
+|   POST | /api/entries        | Add (or remove) an amount to entries' sold quantities. **Authentication** is required.                                         |
+|    GET | /api/entries/stat   | Get current statistic about the event (only entries info) **Authentication** is required.                                      |
 
 ## Database
 

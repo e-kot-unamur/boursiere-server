@@ -317,7 +317,7 @@ func main() {
 	})
 
 	// Get the list of all entries.
-	router.GET("/api/entries", auth(db.Users, true), func(c *gin.Context) {
+	router.GET("/api/entries", auth(db.Users, false), func(c *gin.Context) {
 		entries, err := db.Entries.All()
 		if err != nil {
 			panic(err)
@@ -330,7 +330,7 @@ func main() {
 	router.GET("/api/entries/events", entriesBroker.ServeHTTP)
 
 	// Add a new entry sale.
-	router.POST("/api/entries", auth(db.Users, true), func(c *gin.Context) {
+	router.POST("/api/entries", auth(db.Users, false), func(c *gin.Context) {
 		fmt.Println("new entry")
 		var req createEntryReq
 		if err := c.BindJSON(&req); err != nil {
@@ -358,7 +358,7 @@ func main() {
 	})
 
 	// Get statistic about entries.
-	router.GET("/api/entries/stat", auth(db.Users, true), func(c *gin.Context) {
+	router.GET("/api/entries/stat", auth(db.Users, false), func(c *gin.Context) {
 		count, err := db.Entries.Count()
 		if err != nil {
 			panic(err)
