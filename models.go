@@ -46,9 +46,9 @@ type UserManager interface {
 // EntriesManager includes all possible operations on the Entries model.
 type EntriesManager interface {
 	All() ([]Entries, error)
-	Create(OrderedQuantity int) (Entries, error)
+	Create(OrderedQuantity int, EndOfParty bool) (Entries, error)
 	DeleteAll() error
-	Count() (uint, error)
+	Count() (uint, uint, error)
 }
 
 // Beer represents a type of beer from the database.
@@ -221,4 +221,5 @@ type Entries struct {
 	ID           uint   `json:"id"`
 	Timestamp    string `json:"timestamp"`
 	SoldQuantity int    `json:"orderedQuantity"`
+	EndOfParty   bool   `json:"endOfParty"`
 }

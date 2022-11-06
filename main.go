@@ -36,7 +36,8 @@ type (
 	}
 
 	createEntryReq struct {
-		OrderedQuantity int `json:"orderedQuantity"`
+		OrderedQuantity int  `json:"orderedQuantity"`
+		EndOfParty      bool `json:"endOfParty"`
 	}
 )
 
@@ -338,7 +339,7 @@ func main() {
 			return
 		}
 
-		entry, err := db.Entries.Create(req.OrderedQuantity)
+		entry, err := db.Entries.Create(req.OrderedQuantity, req.EndOfParty)
 		if err != nil {
 			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "non_unique_name"})
 			return
@@ -359,12 +360,15 @@ func main() {
 
 	// Get statistic about entries.
 	router.GET("/api/entries/stat", auth(db.Users, false), func(c *gin.Context) {
-		count, err := db.Entries.Count()
+		count, count2, err := db.Entries.Count()
 		if err != nil {
 			panic(err)
 		}
 
-		c.JSON(http.StatusOK, count)
+		c.JSON(http.StatusOK, gin.H{
+			"totalSale":          count,
+			"peopleCurrentParty": count2,
+		})
 	})
 
 	router.Run()

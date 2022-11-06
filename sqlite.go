@@ -327,7 +327,7 @@ func (m sqliteEntriesManager) All() ([]Entries, error) {
 	entries := []Entries{}
 	for rows.Next() {
 		var e Entries
-		if err := rows.Scan(&e.ID, &e.Timestamp, &e.SoldQuantity); err != nil {
+		if err := rows.Scan(&e.ID, &e.Timestamp, &e.SoldQuantity, &e.EndOfParty); err != nil {
 			return nil, err
 		}
 
@@ -341,10 +341,10 @@ func (m sqliteEntriesManager) All() ([]Entries, error) {
 	return entries, nil
 }
 
-func (m sqliteEntriesManager) Create(OrderedQuantity int) (Entries, error) {
-	entry := Entries{SoldQuantity: OrderedQuantity}
+func (m sqliteEntriesManager) Create(OrderedQuantity int, EndOfParty bool) (Entries, error) {
+	entry := Entries{SoldQuantity: OrderedQuantity, EndOfParty: EndOfParty}
 
-	result, err := m.dot.Exec(m.db, "entries/create", entry.SoldQuantity)
+	result, err := m.dot.Exec(m.db, "entries/create", entry.SoldQuantity, entry.EndOfParty)
 	if err != nil {
 		return entry, err
 	}
@@ -367,16 +367,26 @@ func (m sqliteEntriesManager) DeleteAll() error {
 	return nil
 }
 
-func (m sqliteEntriesManager) Count() (uint, error) {
-	row, err := m.dot.QueryRow(m.db, "entries/stat")
+func (m sqliteEntriesManager) Count() (uint, uint, error) {
+	row, err := m.dot.QueryRow(m.db, "entries/stat/currentPeople")
 	if err != nil {
-		return 0, err
+		return 0, 0, err
 	}
 
-	var count uint
-	if err := row.Scan(&count); err != nil {
-		return 0, err
+	var currentPeople uint
+	if err := row.Scan(&currentPeople); err != nil {
+		return 0, 0, err
 	}
 
-	return count, nil
+	row2, err := m.dot.QueryRow(m.db, "entries/stat/allEntries")
+	if err != nil {
+		return 0, 0, err
+	}
+
+	var allEntries uint
+	if err := row2.Scan(&allEntries); err != nil {
+		return 0, 0, err
+	}
+
+	return currentPeople, allEntries, nil
 }
