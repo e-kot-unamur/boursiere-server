@@ -41,7 +41,7 @@ type (
 	}
 )
 
-const period = 15 * time.Minute
+const period = 2 * time.Minute
 
 func main() {
 	dataSourceName := os.Getenv("DATABASE_FILE")
