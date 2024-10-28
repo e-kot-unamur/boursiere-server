@@ -373,7 +373,7 @@ func (m sqliteEntriesManager) Count() (uint, uint, error) {
 		return 0, 0, err
 	}
 
-	var currentPeople uint
+	var currentPeople sql.NullInt64
 	if err := row.Scan(&currentPeople); err != nil {
 		return 0, 0, err
 	}
@@ -383,10 +383,20 @@ func (m sqliteEntriesManager) Count() (uint, uint, error) {
 		return 0, 0, err
 	}
 
-	var allEntries uint
+	var allEntries sql.NullInt64
 	if err := row2.Scan(&allEntries); err != nil {
 		return 0, 0, err
 	}
 
-	return currentPeople, allEntries, nil
+	currentPeopleValue := uint(0)
+	if currentPeople.Valid {
+		currentPeopleValue = uint(currentPeople.Int64)
+	}
+
+	allEntriesValue := uint(0)
+	if allEntries.Valid {
+		allEntriesValue = uint(allEntries.Int64)
+	}
+
+	return currentPeopleValue, allEntriesValue, nil
 }
